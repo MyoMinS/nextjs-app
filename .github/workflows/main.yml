@@ -1,0 +1,17 @@
+name: Deploy Nextjs app
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy_nextjs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy Next server
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: " cd /home/ubuntu/devops && ./nextjs.sh"
